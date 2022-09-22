@@ -7,6 +7,7 @@ import LikesAndCommentsCounter from "./LikesAndCommentsCounter";
 import movieApis from "../../utils/movie";
 import profileApis from "../../utils/profile";
 import StarRating from "../movie-page/StarRating";
+import { CircularProgress } from "@mui/material";
 
 // import CommentThread from "./CommentThread";
 import CommentBox from "./CommentBox";
@@ -42,11 +43,15 @@ function ReviewCard({ reviewId, page }) {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      try {
-        const movieResult = await movieApis.getMovie(review.movieId.movieApiId);
+      if (review.movieId) {
+        try {
+          const movieResult = await movieApis.getMovie(review.movieId.movieApiId);
 
-        setMovie(movieResult.data);
-      } catch (err) {}
+          setMovie(movieResult.data);
+        } catch (err) {
+          console.log("error with fetching movie details", err);
+        }
+      }
     };
 
     // const fetchUserGender = async () => {
@@ -146,6 +151,8 @@ function ReviewCard({ reviewId, page }) {
 
           {page === "movie-page" ? (
             <></>
+          ) : !movie.backdrop_path ? (
+            <div>wait ah still loading</div>
           ) : (
             <div className="movie text-center mb-3">
               <Image

@@ -27,8 +27,8 @@ import Landing from "./components/auth/Landing";
 import Navibar from "./components/navbar/Navbar";
 
 function App() {
-  const [tokenState, setTokenState] = useState();
-  const [user, setUser] = useState();
+  const [tokenState, setTokenState] = useState(null);
+  const [user, setUser] = useState(null);
   const [profile, setProfile] = useState({});
   const [followState, setFollowState] = useState(0);
 
@@ -43,12 +43,15 @@ function App() {
   };
 
   const getFollowers = async () => {
-    try {
-      await new Promise((r) => setTimeout(r, 500));
-      const profileResult = await apis.getProfile(user, tokenToSend);
-      setProfile(profileResult.data);
-    } catch (err) {
-      // toast.error(err.response.data.error);
+    if (user) {
+      try {
+        await new Promise((r) => setTimeout(r, 1000));
+        const profileResult = await apis.getProfile(user, tokenToSend);
+        setProfile(profileResult.data);
+      } catch (err) {
+        console.log("issue from app getting user profile", err);
+        // toast.error(err.response.data.error);
+      }
     }
   };
 
@@ -62,7 +65,7 @@ function App() {
 
   useEffect(() => {
     getFollowers();
-  }, [followState]);
+  }, [followingCount]);
 
   return (
     <div className="App">
@@ -72,7 +75,7 @@ function App() {
         user={user}
         setTokenState={setTokenState}
         followees={profile.followees}
-        followState={followState}
+        followingCount={followingCount}
       />
       <Routes>
         {/* 
@@ -95,13 +98,7 @@ function App() {
         <Route path="/register" element={<Guest component={Register} />} />
         <Route
           path="/login"
-          element={
-            <Guest
-              component={Login}
-              setTokenState={setTokenState}
-              user={user}
-            />
-          }
+          element={<Guest component={Login} setTokenState={setTokenState} user={user} />}
         />
         <Route
           path="/profiles/:username"
@@ -113,14 +110,8 @@ function App() {
             />
           }
         />
-        <Route
-          path="/reviews/:reviewId"
-          element={<Auth component={ReviewPage} />}
-        />
-        <Route
-          path="/reviews/:reviewId/edit"
-          element={<Auth component={EditMovieReviewPage} />}
-        />
+        <Route path="/reviews/:reviewId" element={<Auth component={ReviewPage} />} />
+        <Route path="/reviews/:reviewId/edit" element={<Auth component={EditMovieReviewPage} />} />
         {/* <Route path="/auth" element={<Auth component={AuthExample} />} /> */}
         <Route path="*" element={<ErrorPage message="Page not found" />} />
       </Routes>

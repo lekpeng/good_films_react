@@ -7,7 +7,7 @@ import FollowingModal from "../../pages/profile-page/FollowingModal";
 import { useState, useEffect } from "react";
 import profileApis from "../../utils/profile";
 
-function Navibar({ tokenState, user, setTokenState, followees, followState }) {
+function Navibar({ tokenState, user, setTokenState, followees, followingCount }) {
   const navigate = useNavigate();
 
   // const [userHairLength, setUserHairLength] = useState(null);
@@ -71,7 +71,9 @@ function Navibar({ tokenState, user, setTokenState, followees, followState }) {
                 Profile
               </NavDropdown.Item>
               <NavDropdown.Item>
-                {followees && <FollowingModal followees={followees} followState={followState} />}
+                {followees && (
+                  <FollowingModal followees={followees} followingCount={followingCount} />
+                )}
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item id="logoutDropdown">

@@ -25,6 +25,8 @@ function UserFeedPage() {
         setUserFeedReviewIds(profileResult.data.reviews);
         setCurrentUserProfile(profileResult.data);
       } catch (err) {
+        console.log("some error getting current user profile", err);
+
         setErrorMsg(err.response.data.error);
       }
     };
@@ -40,6 +42,7 @@ function UserFeedPage() {
             const profileResult = await apis.getProfile(followee, token);
             return profileResult.data.reviews;
           } catch (err) {
+            console.log("some error getting followees profile", err);
             toast.error(err.response.data.error);
           }
         })

@@ -12,13 +12,14 @@ import jwt_decode from "jwt-decode";
 import { CircularProgress } from "@mui/material";
 
 function ProfilePage(props) {
+  console.log("profile page props", props);
   const params = useParams();
   // const [profileInViewUsername, setProfileInViewUsername] = useState(params.username);
   const [profile, setProfile] = useState({});
   const [currentUserProfile, setCurrentUserProfile] = useState({});
   const [followeeOptions, setFolloweeOptions] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [userHairLength, setUserHairLength] = useState(null);
+  // const [userHairLength, setUserHairLength] = useState(null);
 
   const token = "Bearer " + localStorage.getItem("user_token");
   const currentUserUsername = jwt_decode(token).data.username;

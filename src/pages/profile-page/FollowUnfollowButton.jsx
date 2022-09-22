@@ -8,8 +8,10 @@ function FollowUnfollowButton({
   currentUserProfile,
   setCurrentUserProfile,
   setFollowState,
-  followState
+  followState,
 }) {
+  console.log("following count", followingCount);
+  console.log("setfollowingcount", setFollowingCount);
   const [isFollowing, setIsFollowing] = useState(false);
   const token = "Bearer " + localStorage.getItem("user_token");
 
@@ -23,7 +25,7 @@ function FollowUnfollowButton({
 
   const updateFollowingBackend = async (type) => {
     try {
-      console.log("here321", profileInViewUsername, type)
+      console.log("here321", profileInViewUsername, type);
       const followee = profileInViewUsername;
       const response = await apis.updateFollowing(followee, token, type);
       console.log("response", response);
@@ -31,7 +33,7 @@ function FollowUnfollowButton({
         ...currentUserProfile,
         followees: response.data.followees,
       };
-      console.log("updated profile: " + JSON.stringify(updatedProfile))
+      console.log("updated profile: " + JSON.stringify(updatedProfile));
       setCurrentUserProfile(updatedProfile);
       toast.success(`${type} ${followee} successful!`);
     } catch (err) {
@@ -42,12 +44,12 @@ function FollowUnfollowButton({
 
   const updateFollowing = (e) => {
     if (e.target.innerText === "Follow") {
-      updateFollowingBackend("follow")
+      updateFollowingBackend("follow");
       setFollowState(followState + 1);
-      console.log('button running')
+      console.log("button running");
       return;
     }
-    updateFollowingBackend("unfollow")
+    updateFollowingBackend("unfollow");
     setFollowState(followState - 1);
     return;
   };
