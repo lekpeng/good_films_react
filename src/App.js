@@ -65,7 +65,7 @@ function App() {
 
   useEffect(() => {
     getFollowers();
-  }, [followingCount]);
+  }, [followState]);
 
   return (
     <div className="App">
@@ -75,7 +75,7 @@ function App() {
         user={user}
         setTokenState={setTokenState}
         followees={profile.followees}
-        followingCount={followingCount}
+        followState={followState}
       />
       <Routes>
         {/* 

@@ -10,8 +10,6 @@ function FollowUnfollowButton({
   setFollowState,
   followState,
 }) {
-  console.log("following count", followingCount);
-  console.log("setfollowingcount", setFollowingCount);
   const [isFollowing, setIsFollowing] = useState(false);
   const token = "Bearer " + localStorage.getItem("user_token");
 
