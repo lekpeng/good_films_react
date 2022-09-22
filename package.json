@@ -2,7 +2,6 @@
   "name": "good_films_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://marcusmo117.github.io/good_films_react/",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
